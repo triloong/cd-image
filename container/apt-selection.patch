@@ -1,0 +1,22 @@
+diff --git a/tools/apt-selection b/tools/apt-selection
+index 2b19c1f1..bddc70a7 100755
+--- a/tools/apt-selection
++++ b/tools/apt-selection
+@@ -141,8 +141,15 @@ elif [ "$1" = "cache" ]; then
+ 	if [ "$1" = "showsrc" ]; then
+ 		options="$options --only-source"
+ 	fi
+-	apt-cache $options $@
+-	exit $?
++	if [ "$1" = "dumpavail" ] && [ "$IGNORE_DEBUG_SYMBOLS" = "1" ]; then
++		apt-cache $options $@ > $temp
++		num=$?
++		grep-dctrl -v -X -F Auto-Built-Package debug-symbols $temp
++		exit $num
++	else
++		apt-cache $options $@
++		exit $?
++	fi
+ elif [ "$1" = "deselected" ]; then
+ 	shift
+ 	apt-get $options -s $@ > $temp
