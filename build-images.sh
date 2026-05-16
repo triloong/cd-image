@@ -8,7 +8,7 @@ mkdir -p "$pubdir"
 stagingdir=$PWD/staging
 mkdir -p "$stagingdir"
 
-version="13.4.0"
+version="13.5.0"
 tmpdir="$(mktemp -d -p "$stagingdir")"
 
 variants=(netinst dvd)
